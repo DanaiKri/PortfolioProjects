@@ -44,14 +44,7 @@ GROUP BY location
 ORDER BY TotalDeathCount DESC
 
 --LET'S BREAK THINGS DOWN BY CONTINENT
-/*ayto einai to SWSTO apla epeidh oloklhrwse to project me allo query, synexizoyme me to allo,THA TO KANV MONH MOY META */
-SELECT location,MAX(CAST(total_deaths AS int)) AS TotalDeathCount 
-FROM PortfolioProject..CovidDeaths
---WHERE location like '%states%'
-WHERE continent IS  NULL
-GROUP BY location
-ORDER BY TotalDeathCount DESC
-
+	
 SELECT continent,MAX(CAST(total_deaths AS int)) AS TotalDeathCount 
 FROM PortfolioProject..CovidDeaths
 --WHERE location like '%states%'
@@ -79,10 +72,10 @@ WHERE continent IS NOT NULL
 ORDER BY 1,2
 
 --LOOKING AT TOTAL POPULATION VS VACCINATIONS
---DE MOU BGAZEI TA IDIA ME ALEX
+
 SELECT dea.continent,dea.location, dea.date, dea.population, vac.new_vaccinations
 ,SUM(CONVERT(int,vac.new_vaccinations)) OVER (PARTITION BY dea.location ORDER BY dea.location,dea.date) AS RollingPeopleVaccinated
---,(RollingPeopleVaccinated/population)*100 PWS MPORW NA TO KANW AYTO? STO EPOMENO QUERY ME XRHSH CTE
+--,(RollingPeopleVaccinated/population)*100 
 FROM PortfolioProject..CovidDeaths dea
 JOIN PortfolioProject..CovidVaccinations vac
 	ON dea.location = vac.location
